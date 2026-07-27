@@ -39,6 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, onToggleTheme }) => {
 
   return (
     <nav className="navbar">
+      {/* Left Brand Logo */}
       <a href="#hero" className="nav-brand" onClick={() => handleNavClick('hero')}>
         <div className="brand-avatar">
           <span>FRW</span>
@@ -46,49 +47,9 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, onToggleTheme }) => {
         <span>Fitra<span className="gradient-text">Romeo</span></span>
       </a>
 
-      <div className="nav-actions" style={{ gap: '0.5rem' }}>
-        <button 
-          className="mobile-toggle-btn"
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          aria-label="Toggle Mobile Menu"
-          title="Toggle Navigation Menu"
-        >
-          {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
-
-      <ul className={`nav-links ${isMobileOpen ? 'open' : ''}`}>
-        <li>
-          <a 
-            href="#hero" 
-            className={`nav-item ${activeSection === 'hero' ? 'active' : ''}`}
-            onClick={() => handleNavClick('hero')}
-          >
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a 
-            href="#projects" 
-            className={`nav-item ${activeSection === 'projects' ? 'active' : ''}`}
-            onClick={() => handleNavClick('projects')}
-          >
-            Projects
-          </a>
-        </li>
-        <li>
-          <a 
-            href="#contact" 
-            className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}
-            onClick={() => handleNavClick('contact')}
-          >
-            Contact
-          </a>
-        </li>
-      </ul>
-
-      <div className="nav-actions">
-        <div className="status-badge" title="Open for freelance and full-time opportunities">
+      {/* Right Quick Actions */}
+      <div className="nav-right-actions">
+        <div className="status-badge desktop-only" title="Open for freelance and full-time opportunities">
           <span className="pulse-dot"></span>
           <span style={{ fontSize: '0.8rem' }}>Available for Hire</span>
         </div>
@@ -102,10 +63,70 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, onToggleTheme }) => {
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <a href="#contact" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
+        <a href="#contact" className="btn btn-primary desktop-only" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
           <Send size={15} />
           <span>Hire Me</span>
         </a>
+
+        <button 
+          className="mobile-toggle-btn"
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          aria-label="Toggle Mobile Menu"
+          title="Menu Navigasi"
+        >
+          {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+
+      {/* Collapsible Nav Links & Actions for Mobile & Desktop */}
+      <div className={`nav-menu-container ${isMobileOpen ? 'open' : ''}`}>
+        <ul className="nav-links">
+          <li>
+            <a 
+              href="#hero" 
+              className={`nav-item ${activeSection === 'hero' ? 'active' : ''}`}
+              onClick={() => handleNavClick('hero')}
+            >
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#projects" 
+              className={`nav-item ${activeSection === 'projects' ? 'active' : ''}`}
+              onClick={() => handleNavClick('projects')}
+            >
+              Projects
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#contact" 
+              className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}
+              onClick={() => handleNavClick('contact')}
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+
+        {/* Mobile Dropdown Extra Actions */}
+        <div className="mobile-menu-actions">
+          <div className="status-badge" style={{ justifyContent: 'center', width: '100%', padding: '0.5rem' }}>
+            <span className="pulse-dot"></span>
+            <span>Available for Hire</span>
+          </div>
+
+          <a 
+            href="#contact" 
+            className="btn btn-primary" 
+            onClick={() => setIsMobileOpen(false)}
+            style={{ width: '100%' }}
+          >
+            <Send size={16} />
+            <span>Hire Me</span>
+          </a>
+        </div>
       </div>
     </nav>
   );
