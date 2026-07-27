@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Download, Terminal, Cpu } from 'lucide-react';
+import { ArrowRight, Terminal, Cpu } from 'lucide-react';
 import profilePhoto from '../assets/Photo.JPEG';
 
 export const HeroSection: React.FC = () => {
@@ -23,11 +23,6 @@ export const HeroSection: React.FC = () => {
           <a href="#projects" className="btn btn-primary">
             <span>Explore Projects</span>
             <ArrowRight size={18} />
-          </a>
-
-          <a href="#contact" className="btn btn-secondary">
-            <Download size={18} />
-            <span>Download CV</span>
           </a>
         </div>
       </div>
