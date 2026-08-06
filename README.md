@@ -36,6 +36,7 @@ Selamat datang di repositori website portofolio interaktif **Fitra Romeo Winky**
 | **Iuran Hub** | Aplikasi platform digital pengelolaan kas & iuran komplek warga secara transparan. | `Laravel`, `React`, `MySQL` | [GitHub Repo](https://github.com/fitraaromeo/iuran-hub) |
 | **Siakad UM Manado** | Sistem Informasi Akademik Universitas Muhammadiyah Manado (Penyedia API & Database). | `Laravel API`, `PostgreSQL` | 🔒 *Private Repository* |
 | **Car Damage Detection** | Sistem AI deteksi kerusakan mobil menggabungkan model Vision YOLOv12n & FastAPI. | `YOLOv12n`, `FastAPI`, `Python` | [GitHub Repo](https://github.com/fitraaromeo/car-damage-detection-using-yolov12n) |
+| **Honeypot Data Analysis** | Sistem deteksi anomali pola serangan honeypot berbasis Machine Learning Isolation Forest. | `Isolation Forest`, `Python`, `ML` | 🔒 *Private Repository* |
 
 ---
 

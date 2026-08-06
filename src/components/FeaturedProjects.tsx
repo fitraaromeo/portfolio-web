@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Lock, X } from 'lucide-react';
+import { Sparkles, Lock, X, ShieldAlert } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 import iuranHubImg from '../assets/Iuran Hub.png';
@@ -12,7 +12,8 @@ interface Project {
   description: string;
   longDescription?: string;
   tags: string[];
-  imageSrc: string;
+  imageSrc?: string;
+  bannerIcon?: React.ReactNode;
   githubUrl?: string;
   isPrivate?: boolean;
 }
@@ -47,6 +48,15 @@ export const FeaturedProjects: React.FC = () => {
       tags: ['YOLOv12n', 'FastAPI', 'Computer Vision', 'Python', 'AI Model'],
       imageSrc: carDamageImg,
       githubUrl: 'https://github.com/fitraaromeo/car-damage-detection-using-yolov12n'
+    },
+    {
+      id: 4,
+      title: 'Honeypot Data Analysis dengan Isolation Forest',
+      description: 'Sistem deteksi anomali untuk mengidentifikasi pola serangan dalam data honeypot menggunakan algoritma Isolation Forest, 10+ feature engineering, dan klasifikasi jenis serangan otomatis.',
+      longDescription: 'Sistem deteksi anomali dan analisis keamanan honeypot berbasis Machine Learning (Unsupervised Isolation Forest). Mengimplementasikan 10+ fitur engineering (entropy, command length, suspicious pattern count, recon commands), mengklasifikasi 7 jenis serangan (Reconnaissance, Data Exfiltration, Malware Deployment, Privilege Escalation, Persistence, Command Injection, Web Exploit), serta memberikan rating keparahan (Critical, High, Medium, Low) secara otomatis.',
+      tags: ['Isolation Forest', 'Python', 'Machine Learning', 'Cybersecurity', 'Scikit-Learn'],
+      bannerIcon: <ShieldAlert className="project-banner-icon" />,
+      isPrivate: true
     }
   ];
 
@@ -82,7 +92,11 @@ export const FeaturedProjects: React.FC = () => {
             title="Klik untuk membuka detail proyek"
           >
             <div className="project-banner">
-              <img src={project.imageSrc} alt={project.title} loading="lazy" />
+              {project.imageSrc ? (
+                <img src={project.imageSrc} alt={project.title} loading="lazy" />
+              ) : (
+                project.bannerIcon || <ShieldAlert className="project-banner-icon" />
+              )}
             </div>
 
             <div className="project-body">
@@ -139,7 +153,13 @@ export const FeaturedProjects: React.FC = () => {
             </button>
 
             <div className="modal-banner">
-              <img src={selectedProject.imageSrc} alt={selectedProject.title} />
+              {selectedProject.imageSrc ? (
+                <img src={selectedProject.imageSrc} alt={selectedProject.title} />
+              ) : (
+                <div style={{ padding: '2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {selectedProject.bannerIcon || <ShieldAlert size={80} color="var(--accent-primary)" />}
+                </div>
+              )}
             </div>
 
             <div className="modal-content">
