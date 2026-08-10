@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Lock, X, ShieldAlert } from 'lucide-react';
+import { Sparkles, Lock, X, ShieldAlert, ExternalLink } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 import iuranHubImg from '../assets/Iuran Hub.png';
 import siakadImg from '../assets/Siakad UM Manado.png';
 import carDamageImg from '../assets/Car Damage Detection YOLOv12n.png';
+import otoscanImg from '../assets/otoscan.png';
 
 interface Project {
   id: number;
   title: string;
+  shortDesc: string;
   description: string;
   longDescription?: string;
   tags: string[];
@@ -16,6 +18,8 @@ interface Project {
   bannerIcon?: React.ReactNode;
   githubUrl?: string;
   isPrivate?: boolean;
+  isFeatured?: boolean;
+  category: string;
 }
 
 export const FeaturedProjects: React.FC = () => {
@@ -24,52 +28,73 @@ export const FeaturedProjects: React.FC = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: 'Iuran Hub',
-      description: 'Aplikasi platform digital untuk mengelola dana kas dan iuran warga di area komplek secara transparan dan terstruktur.',
-      longDescription: 'Iuran Hub adalah solusi manajemen keuangan digital yang dirancang untuk mengelola kas warga komplek perumahan. Aplikasi ini dibangun dengan kombinasi Laravel sebagai API backend, React untuk antarmuka pengguna yang cepat dan responsif, serta MySQL untuk penyimpanan data relasional yang aman.',
-      tags: ['Laravel', 'React', 'MySQL', 'Full-Stack'],
-      imageSrc: iuranHubImg,
-      githubUrl: 'https://github.com/fitraaromeo/iuran-hub'
+      title: 'OtoScan AI',
+      shortDesc: 'Intelligent Vehicle Inspection System',
+      description: 'Sistem inspeksi fisik kendaraan berbasis kecerdasan buatan dengan YOLOv12 Computer Vision. Monorepo dengan Flutter, Go Fiber API, dan Python FastAPI terintegrasi penuh.',
+      longDescription: 'OtoScan AI adalah sistem inspeksi kendaraan full-stack berarsitektur microservice (Monorepo). Frontend Flutter multi-platform mengirimkan foto 4-sisi kendaraan ke Go Fiber REST API, yang meneruskannya ke Python FastAPI AI service untuk inferensi YOLOv12. Model mendeteksi 6 jenis kerusakan: dent, scratch, crack, glass shatter, lamp broken, dan tire flat — hasilnya dikembalikan sebagai annotated bounding box image dan laporan JSON ke Flutter secara real-time.',
+      tags: ['Flutter', 'Go Fiber', 'FastAPI', 'YOLOv12', 'PostgreSQL', 'Computer Vision'],
+      imageSrc: otoscanImg,
+      githubUrl: 'https://github.com/fitraaromeo/Otoscan-AI',
+      isFeatured: true,
+      category: 'AI / Full-Stack'
     },
     {
       id: 2,
-      title: 'Siakad UM Manado',
-      description: 'Sistem Informasi Akademik Universitas Muhammadiyah Manado. Fokus pada penyediaan RESTful API backend dan arsitektur database relasional.',
-      longDescription: 'Sistem Informasi Akademik (SIAKAD) untuk Universitas Muhammadiyah Manado. Pada proyek ini, peran utama meliputi perancangan dan penyediaan RESTful API menggunakan Laravel serta pengelolaan arsitektur database performa tinggi berbasis PostgreSQL.',
-      tags: ['Laravel API', 'PostgreSQL', 'Backend', 'Database Admin'],
-      imageSrc: siakadImg,
-      isPrivate: true
-    },
-    {
-      id: 3,
       title: 'Car Damage Detection',
+      shortDesc: 'AI-Powered Damage Classifier',
       description: 'Sistem AI untuk mengidentifikasi & mendeteksi tingkat kerusakan mobil berbasis model YOLOv12n yang terintegrasi dengan web engine FastAPI.',
       longDescription: 'Proyek Computer Vision yang menggabungkan model deteksi objek mutakhir YOLOv12n untuk mendeteksi lokasi dan jenis kerusakan kendaraan secara real-time. Sistem diintegrasikan ke dalam antarmuka web performa tinggi berbasis Python FastAPI.',
       tags: ['YOLOv12n', 'FastAPI', 'Computer Vision', 'Python', 'AI Model'],
       imageSrc: carDamageImg,
-      githubUrl: 'https://github.com/fitraaromeo/car-damage-detection-using-yolov12n'
+      githubUrl: 'https://github.com/fitraaromeo/car-damage-detection-using-yolov12n',
+      category: 'Computer Vision'
+    },
+    {
+      id: 3,
+      title: 'Honeypot Data Analysis',
+      shortDesc: 'Anomaly Detection with Isolation Forest',
+      description: 'Sistem deteksi anomali untuk mengidentifikasi pola serangan dalam data honeypot menggunakan Isolation Forest, 10+ feature engineering, dan klasifikasi jenis serangan otomatis.',
+      longDescription: 'Sistem deteksi anomali dan analisis keamanan honeypot berbasis Machine Learning (Unsupervised Isolation Forest). Mengimplementasikan 10+ fitur engineering (entropy, command length, suspicious pattern count, recon commands), mengklasifikasi 7 jenis serangan (Reconnaissance, Data Exfiltration, Malware Deployment, Privilege Escalation, Persistence, Command Injection, Web Exploit), serta memberikan rating keparahan (Critical, High, Medium, Low) secara otomatis.',
+      tags: ['Isolation Forest', 'Python', 'Scikit-Learn', 'Cybersecurity', 'ML'],
+      bannerIcon: <ShieldAlert className="project-banner-icon" />,
+      isPrivate: true,
+      category: 'Machine Learning'
     },
     {
       id: 4,
-      title: 'Honeypot Data Analysis dengan Isolation Forest',
-      description: 'Sistem deteksi anomali untuk mengidentifikasi pola serangan dalam data honeypot menggunakan algoritma Isolation Forest, 10+ feature engineering, dan klasifikasi jenis serangan otomatis.',
-      longDescription: 'Sistem deteksi anomali dan analisis keamanan honeypot berbasis Machine Learning (Unsupervised Isolation Forest). Mengimplementasikan 10+ fitur engineering (entropy, command length, suspicious pattern count, recon commands), mengklasifikasi 7 jenis serangan (Reconnaissance, Data Exfiltration, Malware Deployment, Privilege Escalation, Persistence, Command Injection, Web Exploit), serta memberikan rating keparahan (Critical, High, Medium, Low) secara otomatis.',
-      tags: ['Isolation Forest', 'Python', 'Machine Learning', 'Cybersecurity', 'Scikit-Learn'],
-      bannerIcon: <ShieldAlert className="project-banner-icon" />,
-      isPrivate: true
-    }
+      title: 'Iuran Hub',
+      shortDesc: 'Digital Community Finance Platform',
+      description: 'Aplikasi platform digital untuk mengelola dana kas dan iuran warga di area komplek secara transparan dan terstruktur.',
+      longDescription: 'Iuran Hub adalah solusi manajemen keuangan digital yang dirancang untuk mengelola kas warga komplek perumahan. Aplikasi ini dibangun dengan kombinasi Laravel sebagai API backend, React untuk antarmuka pengguna yang cepat dan responsif, serta MySQL untuk penyimpanan data relasional yang aman.',
+      tags: ['Laravel', 'React', 'MySQL', 'Full-Stack'],
+      imageSrc: iuranHubImg,
+      githubUrl: 'https://github.com/fitraaromeo/iuran-hub',
+      category: 'Full-Stack Web'
+    },
+    {
+      id: 5,
+      title: 'Siakad UM Manado',
+      shortDesc: 'Academic Information System API',
+      description: 'Sistem Informasi Akademik Universitas Muhammadiyah Manado. Fokus pada penyediaan RESTful API backend dan arsitektur database relasional performa tinggi.',
+      longDescription: 'Sistem Informasi Akademik (SIAKAD) untuk Universitas Muhammadiyah Manado. Pada proyek ini, peran utama meliputi perancangan dan penyediaan RESTful API menggunakan Laravel serta pengelolaan arsitektur database performa tinggi berbasis PostgreSQL.',
+      tags: ['Laravel API', 'PostgreSQL', 'Backend', 'Database Admin'],
+      imageSrc: siakadImg,
+      isPrivate: true,
+      category: 'Backend'
+    },
   ];
 
   // Close modal on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setSelectedProject(null);
-      }
+      if (e.key === 'Escape') setSelectedProject(null);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  const featuredProject = projects.find(p => p.isFeatured);
+  const otherProjects = projects.filter(p => !p.isFeatured);
 
   return (
     <section id="projects" style={{ marginBottom: '4rem' }}>
@@ -78,15 +103,68 @@ export const FeaturedProjects: React.FC = () => {
           <Sparkles size={24} color="var(--accent-primary)" />
           <div>
             <h2>Proyek Unggulan</h2>
-            <p className="section-subtitle">Klik pada kartu proyek untuk melihat detail lengkap & gambar yang membesar</p>
+            <p className="section-subtitle">Klik pada kartu proyek untuk melihat detail lengkap</p>
           </div>
         </div>
       </div>
 
+      {/* Featured Hero Project */}
+      {featuredProject && (
+        <div
+          className="project-card-featured"
+          onClick={() => setSelectedProject(featuredProject)}
+          title="Klik untuk membuka detail proyek"
+        >
+          <div className="project-featured-image">
+            <img src={featuredProject.imageSrc} alt={featuredProject.title} loading="lazy" />
+            <div className="project-featured-overlay" />
+          </div>
+          <div className="project-featured-content">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.65rem' }}>
+              <span className="project-category-badge">{featuredProject.category}</span>
+              <span className="project-category-badge" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981', borderColor: 'rgba(16,185,129,0.3)' }}>
+                ★ Latest Project
+              </span>
+            </div>
+            <h3 className="project-featured-title">{featuredProject.title}</h3>
+            <p className="project-featured-subtitle">{featuredProject.shortDesc}</p>
+            <p className="project-featured-desc">{featuredProject.description}</p>
+            <div className="project-tech-tags" style={{ marginBottom: '1.5rem' }}>
+              {featuredProject.tags.map((tag, idx) => (
+                <span key={idx} className="tech-tag">{tag}</span>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              {featuredProject.githubUrl && (
+                <a
+                  href={featuredProject.githubUrl}
+                  className="btn btn-primary"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={e => e.stopPropagation()}
+                  style={{ fontSize: '0.875rem', padding: '0.55rem 1.1rem' }}
+                >
+                  <GithubIcon size={16} />
+                  <span>Source Code</span>
+                </a>
+              )}
+              <button
+                className="btn btn-secondary"
+                style={{ fontSize: '0.875rem', padding: '0.55rem 1.1rem' }}
+              >
+                <ExternalLink size={16} />
+                <span>Detail Project</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Other Projects Grid */}
       <div className="projects-grid">
-        {projects.map((project) => (
-          <div 
-            key={project.id} 
+        {otherProjects.map((project) => (
+          <div
+            key={project.id}
             className="project-card"
             onClick={() => setSelectedProject(project)}
             title="Klik untuk membuka detail proyek"
@@ -97,9 +175,11 @@ export const FeaturedProjects: React.FC = () => {
               ) : (
                 project.bannerIcon || <ShieldAlert className="project-banner-icon" />
               )}
+              <span className="project-banner-category">{project.category}</span>
             </div>
 
             <div className="project-body">
+              <p className="project-short-desc">{project.shortDesc}</p>
               <h3>{project.title}</h3>
               <p>{project.description}</p>
 
@@ -111,10 +191,10 @@ export const FeaturedProjects: React.FC = () => {
 
               <div className="project-footer">
                 {project.githubUrl ? (
-                  <a 
-                    href={project.githubUrl} 
-                    className="project-link" 
-                    target="_blank" 
+                  <a
+                    href={project.githubUrl}
+                    className="project-link"
+                    target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -133,18 +213,12 @@ export const FeaturedProjects: React.FC = () => {
         ))}
       </div>
 
-      {/* Enlarged Detail Popup Modal */}
+      {/* Detail Modal */}
       {selectedProject && (
-        <div 
-          className="modal-overlay" 
-          onClick={() => setSelectedProject(null)}
-        >
-          <div 
-            className="modal-container" 
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button 
-              className="modal-close-btn" 
+        <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="modal-close-btn"
               onClick={() => setSelectedProject(null)}
               aria-label="Close modal"
               title="Tutup (Esc)"
@@ -163,6 +237,9 @@ export const FeaturedProjects: React.FC = () => {
             </div>
 
             <div className="modal-content">
+              <span className="project-category-badge" style={{ marginBottom: '0.75rem', display: 'inline-flex' }}>
+                {selectedProject.category}
+              </span>
               <h3>{selectedProject.title}</h3>
               <p>{selectedProject.longDescription || selectedProject.description}</p>
 
@@ -181,10 +258,10 @@ export const FeaturedProjects: React.FC = () => {
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 {selectedProject.githubUrl ? (
-                  <a 
-                    href={selectedProject.githubUrl} 
-                    className="btn btn-primary" 
-                    target="_blank" 
+                  <a
+                    href={selectedProject.githubUrl}
+                    className="btn btn-primary"
+                    target="_blank"
                     rel="noreferrer"
                   >
                     <GithubIcon size={18} />

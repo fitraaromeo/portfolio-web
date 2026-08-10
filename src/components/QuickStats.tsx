@@ -10,24 +10,24 @@ interface StatItem {
 export const QuickStats: React.FC = () => {
   const stats: StatItem[] = [
     {
-      icon: <FolderGit2 size={24} />,
+      icon: <FolderGit2 size={22} />,
       value: '5+',
-      label: 'Completed Projects'
+      label: 'Projects Shipped'
     },
     {
-      icon: <GitCommit size={24} />,
+      icon: <GitCommit size={22} />,
       value: '500+',
       label: 'Code Commits'
     },
     {
-      icon: <Layers size={24} />,
-      value: '12+',
-      label: 'Technologies Mastered'
+      icon: <Layers size={22} />,
+      value: '15+',
+      label: 'Technologies'
     },
     {
-      icon: <Award size={24} />,
+      icon: <Award size={22} />,
       value: '2+ Yrs',
-      label: 'Development Experience'
+      label: 'Experience'
     }
   ];
 
