@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Sparkles, Lock, X, ShieldAlert, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Sparkles, Lock, X, ShieldAlert, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 
 import iuranHubImg from '../assets/Iuran Hub.png';
@@ -18,12 +18,17 @@ interface Project {
   bannerIcon?: React.ReactNode;
   githubUrl?: string;
   isPrivate?: boolean;
-  isFeatured?: boolean;
   category: string;
 }
 
+const SLIDE_INTERVAL = 4500;
+
 export const FeaturedProjects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const projects: Project[] = [
     {
@@ -35,7 +40,6 @@ export const FeaturedProjects: React.FC = () => {
       tags: ['Flutter', 'Go Fiber', 'FastAPI', 'YOLOv12', 'PostgreSQL', 'Computer Vision'],
       imageSrc: otoscanImg,
       githubUrl: 'https://github.com/fitraaromeo/Otoscan-AI',
-      isFeatured: true,
       category: 'AI / Full-Stack'
     },
     {
@@ -84,6 +88,40 @@ export const FeaturedProjects: React.FC = () => {
     },
   ];
 
+  const goToSlide = useCallback((index: number) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setActiveSlide(index);
+    setTimeout(() => setIsAnimating(false), 500);
+  }, [isAnimating]);
+
+  const goPrev = useCallback(() => {
+    goToSlide((activeSlide - 1 + projects.length) % projects.length);
+  }, [activeSlide, goToSlide, projects.length]);
+
+  const goNext = useCallback(() => {
+    goToSlide((activeSlide + 1) % projects.length);
+  }, [activeSlide, goToSlide, projects.length]);
+
+  // Auto-slide
+  const startInterval = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setActiveSlide(prev => (prev + 1) % projects.length);
+    }, SLIDE_INTERVAL);
+  }, [projects.length]);
+
+  useEffect(() => {
+    if (!isPaused) {
+      startInterval();
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isPaused, startInterval]);
+
   // Close modal on Escape key press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -93,8 +131,7 @@ export const FeaturedProjects: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const featuredProject = projects.find(p => p.isFeatured);
-  const otherProjects = projects.filter(p => !p.isFeatured);
+  const currentProject = projects[activeSlide];
 
   return (
     <section id="projects" style={{ marginBottom: '4rem' }}>
@@ -108,36 +145,54 @@ export const FeaturedProjects: React.FC = () => {
         </div>
       </div>
 
-      {/* Featured Hero Project */}
-      {featuredProject && (
+      {/* ── Auto-Sliding Featured Carousel ── */}
+      <div
+        className="featured-carousel"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Slide Track */}
         <div
-          className="project-card-featured"
-          onClick={() => setSelectedProject(featuredProject)}
-          title="Klik untuk membuka detail proyek"
+          className="featured-slide"
+          key={activeSlide}
+          onClick={() => setSelectedProject(currentProject)}
+          title="Klik untuk detail proyek"
         >
-          <div className="project-featured-image">
-            <img src={featuredProject.imageSrc} alt={featuredProject.title} loading="lazy" />
-            <div className="project-featured-overlay" />
+          {/* Left: Image */}
+          <div className="featured-slide-image">
+            {currentProject.imageSrc ? (
+              <img src={currentProject.imageSrc} alt={currentProject.title} />
+            ) : (
+              <div className="featured-slide-icon-placeholder">
+                {currentProject.bannerIcon || <ShieldAlert size={72} color="var(--accent-primary)" />}
+              </div>
+            )}
+            <div className="featured-slide-overlay" />
           </div>
-          <div className="project-featured-content">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.65rem' }}>
-              <span className="project-category-badge">{featuredProject.category}</span>
-              <span className="project-category-badge" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981', borderColor: 'rgba(16,185,129,0.3)' }}>
-                ★ Latest Project
-              </span>
+
+          {/* Right: Content */}
+          <div className="featured-slide-content">
+            <div className="featured-slide-badges">
+              <span className="project-category-badge">{currentProject.category}</span>
+              {activeSlide === 0 && (
+                <span className="project-category-badge project-badge-green">⭐ Latest</span>
+              )}
             </div>
-            <h3 className="project-featured-title">{featuredProject.title}</h3>
-            <p className="project-featured-subtitle">{featuredProject.shortDesc}</p>
-            <p className="project-featured-desc">{featuredProject.description}</p>
+
+            <h3 className="project-featured-title">{currentProject.title}</h3>
+            <p className="project-featured-subtitle">{currentProject.shortDesc}</p>
+            <p className="project-featured-desc">{currentProject.description}</p>
+
             <div className="project-tech-tags" style={{ marginBottom: '1.5rem' }}>
-              {featuredProject.tags.map((tag, idx) => (
+              {currentProject.tags.map((tag, idx) => (
                 <span key={idx} className="tech-tag">{tag}</span>
               ))}
             </div>
+
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              {featuredProject.githubUrl && (
+              {currentProject.githubUrl ? (
                 <a
-                  href={featuredProject.githubUrl}
+                  href={currentProject.githubUrl}
                   className="btn btn-primary"
                   target="_blank"
                   rel="noreferrer"
@@ -147,25 +202,69 @@ export const FeaturedProjects: React.FC = () => {
                   <GithubIcon size={16} />
                   <span>Source Code</span>
                 </a>
-              )}
+              ) : currentProject.isPrivate ? (
+                <div className="btn btn-secondary" style={{ fontSize: '0.875rem', padding: '0.55rem 1.1rem', cursor: 'default', opacity: 0.8 }}>
+                  <Lock size={16} />
+                  <span>Private Repo</span>
+                </div>
+              ) : null}
               <button
                 className="btn btn-secondary"
                 style={{ fontSize: '0.875rem', padding: '0.55rem 1.1rem' }}
+                onClick={e => { e.stopPropagation(); setSelectedProject(currentProject); }}
               >
                 <ExternalLink size={16} />
-                <span>Detail Project</span>
+                <span>Detail</span>
               </button>
             </div>
           </div>
         </div>
-      )}
 
-      {/* Other Projects Grid */}
+        {/* Controls: Prev / Next Arrows */}
+        <button
+          className="carousel-arrow carousel-arrow-left"
+          onClick={e => { e.stopPropagation(); goPrev(); }}
+          aria-label="Previous project"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          className="carousel-arrow carousel-arrow-right"
+          onClick={e => { e.stopPropagation(); goNext(); }}
+          aria-label="Next project"
+        >
+          <ChevronRight size={20} />
+        </button>
+
+        {/* Bottom Bar: Dot Indicators + Progress Bar */}
+        <div className="carousel-footer">
+          <div className="carousel-dots">
+            {projects.map((_, idx) => (
+              <button
+                key={idx}
+                className={`carousel-dot ${idx === activeSlide ? 'active' : ''}`}
+                onClick={e => { e.stopPropagation(); goToSlide(idx); }}
+                aria-label={`Go to project ${idx + 1}`}
+              />
+            ))}
+          </div>
+          <span className="carousel-counter">
+            {activeSlide + 1} / {projects.length}
+          </span>
+        </div>
+
+        {/* Auto-progress bar */}
+        {!isPaused && (
+          <div className="carousel-progress-bar" key={`${activeSlide}-${isPaused}`} />
+        )}
+      </div>
+
+      {/* ── All Projects Grid ── */}
       <div className="projects-grid">
-        {otherProjects.map((project) => (
+        {projects.map((project) => (
           <div
             key={project.id}
-            className="project-card"
+            className={`project-card ${project.id === projects[activeSlide].id ? 'project-card-highlighted' : ''}`}
             onClick={() => setSelectedProject(project)}
             title="Klik untuk membuka detail proyek"
           >
@@ -213,7 +312,7 @@ export const FeaturedProjects: React.FC = () => {
         ))}
       </div>
 
-      {/* Detail Modal */}
+      {/* ── Detail Modal ── */}
       {selectedProject && (
         <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
