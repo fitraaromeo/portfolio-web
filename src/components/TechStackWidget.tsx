@@ -52,8 +52,8 @@ export const TechStackWidget: React.FC = () => {
         <div className="section-title">
           <Cpu size={24} color="var(--accent-primary)" />
           <div>
-            <h2>Keahlian & Spesialisasi</h2>
-            <p className="section-subtitle">Fokus utama di bidang AI, Backend Development, serta Integrasi Full-Stack</p>
+            <h2>Skills & Specializations</h2>
+            <p className="section-subtitle">Core focus on Artificial Intelligence, Backend Development, and Full-Stack Integration</p>
           </div>
         </div>
       </div>

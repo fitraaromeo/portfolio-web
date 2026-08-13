@@ -35,8 +35,8 @@ export const FeaturedProjects: React.FC = () => {
       id: 1,
       title: 'OtoScan AI',
       shortDesc: 'Intelligent Vehicle Inspection System',
-      description: 'Sistem inspeksi fisik kendaraan berbasis kecerdasan buatan dengan YOLOv12 Computer Vision. Monorepo dengan Flutter, Go Fiber API, dan Python FastAPI terintegrasi penuh.',
-      longDescription: 'OtoScan AI adalah sistem inspeksi kendaraan full-stack berarsitektur microservice (Monorepo). Frontend Flutter multi-platform mengirimkan foto 4-sisi kendaraan ke Go Fiber REST API, yang meneruskannya ke Python FastAPI AI service untuk inferensi YOLOv12. Model mendeteksi 6 jenis kerusakan: dent, scratch, crack, glass shatter, lamp broken, dan tire flat — hasilnya dikembalikan sebagai annotated bounding box image dan laporan JSON ke Flutter secara real-time.',
+      description: 'AI-powered physical vehicle inspection system with YOLOv12 Computer Vision. Monorepo with fully integrated Flutter, Go Fiber API, and Python FastAPI.',
+      longDescription: 'OtoScan AI is a full-stack vehicle inspection system with a microservices architecture (Monorepo). The multi-platform Flutter frontend sends 4-side vehicle photos to a Go Fiber REST API, which forwards them to a Python FastAPI AI service for YOLOv12 inference. The model detects 6 damage types: dent, scratch, crack, glass shatter, lamp broken, and tire flat — returning annotated bounding box images and JSON reports to Flutter in real time.',
       tags: ['Flutter', 'Go Fiber', 'FastAPI', 'YOLOv12', 'PostgreSQL', 'Computer Vision'],
       imageSrc: otoscanImg,
       githubUrl: 'https://github.com/fitraaromeo/Otoscan-AI',
@@ -46,8 +46,8 @@ export const FeaturedProjects: React.FC = () => {
       id: 2,
       title: 'Car Damage Detection',
       shortDesc: 'AI-Powered Damage Classifier',
-      description: 'Sistem AI untuk mengidentifikasi & mendeteksi tingkat kerusakan mobil berbasis model YOLOv12n yang terintegrasi dengan web engine FastAPI.',
-      longDescription: 'Proyek Computer Vision yang menggabungkan model deteksi objek mutakhir YOLOv12n untuk mendeteksi lokasi dan jenis kerusakan kendaraan secara real-time. Sistem diintegrasikan ke dalam antarmuka web performa tinggi berbasis Python FastAPI.',
+      description: 'AI system for identifying & detecting car damage severity powered by a YOLOv12n model integrated with a high-performance FastAPI web engine.',
+      longDescription: 'Computer Vision project leveraging state-of-the-art YOLOv12n object detection to identify vehicle damage locations and types in real time. Integrated into a high-performance Python FastAPI web interface.',
       tags: ['YOLOv12n', 'FastAPI', 'Computer Vision', 'Python', 'AI Model'],
       imageSrc: carDamageImg,
       githubUrl: 'https://github.com/fitraaromeo/car-damage-detection-using-yolov12n',
@@ -57,8 +57,8 @@ export const FeaturedProjects: React.FC = () => {
       id: 3,
       title: 'Honeypot Data Analysis',
       shortDesc: 'Anomaly Detection with Isolation Forest',
-      description: 'Sistem deteksi anomali untuk mengidentifikasi pola serangan dalam data honeypot menggunakan Isolation Forest, 10+ feature engineering, dan klasifikasi jenis serangan otomatis.',
-      longDescription: 'Sistem deteksi anomali dan analisis keamanan honeypot berbasis Machine Learning (Unsupervised Isolation Forest). Mengimplementasikan 10+ fitur engineering (entropy, command length, suspicious pattern count, recon commands), mengklasifikasi 7 jenis serangan (Reconnaissance, Data Exfiltration, Malware Deployment, Privilege Escalation, Persistence, Command Injection, Web Exploit), serta memberikan rating keparahan (Critical, High, Medium, Low) secara otomatis.',
+      description: 'Anomaly detection system to identify attack patterns in honeypot data using Isolation Forest, 10+ feature engineering, and automated attack classification.',
+      longDescription: 'Machine Learning-based honeypot anomaly detection and security analysis system (Unsupervised Isolation Forest). Implements 10+ engineered features (entropy, command length, suspicious pattern count, recon commands), classifies 7 attack types (Reconnaissance, Data Exfiltration, Malware Deployment, Privilege Escalation, Persistence, Command Injection, Web Exploit), and automatically provides severity ratings (Critical, High, Medium, Low).',
       tags: ['Isolation Forest', 'Python', 'Scikit-Learn', 'Cybersecurity', 'ML'],
       bannerIcon: <ShieldAlert className="project-banner-icon" />,
       isPrivate: true,
@@ -68,8 +68,8 @@ export const FeaturedProjects: React.FC = () => {
       id: 4,
       title: 'Iuran Hub',
       shortDesc: 'Digital Community Finance Platform',
-      description: 'Aplikasi platform digital untuk mengelola dana kas dan iuran warga di area komplek secara transparan dan terstruktur.',
-      longDescription: 'Iuran Hub adalah solusi manajemen keuangan digital yang dirancang untuk mengelola kas warga komplek perumahan. Aplikasi ini dibangun dengan kombinasi Laravel sebagai API backend, React untuk antarmuka pengguna yang cepat dan responsif, serta MySQL untuk penyimpanan data relasional yang aman.',
+      description: 'Digital platform application designed to manage community funds and dues transparently and systematically.',
+      longDescription: 'Iuran Hub is a digital financial management solution tailored for neighborhood housing communities. Built with a Laravel backend API, a fast and responsive React frontend UI, and MySQL for secure relational data storage.',
       tags: ['Laravel', 'React', 'MySQL', 'Full-Stack'],
       imageSrc: iuranHubImg,
       githubUrl: 'https://github.com/fitraaromeo/iuran-hub',
@@ -79,8 +79,8 @@ export const FeaturedProjects: React.FC = () => {
       id: 5,
       title: 'Siakad UM Manado',
       shortDesc: 'Academic Information System API',
-      description: 'Sistem Informasi Akademik Universitas Muhammadiyah Manado. Fokus pada penyediaan RESTful API backend dan arsitektur database relasional performa tinggi.',
-      longDescription: 'Sistem Informasi Akademik (SIAKAD) untuk Universitas Muhammadiyah Manado. Pada proyek ini, peran utama meliputi perancangan dan penyediaan RESTful API menggunakan Laravel serta pengelolaan arsitektur database performa tinggi berbasis PostgreSQL.',
+      description: 'Academic Information System for Universitas Muhammadiyah Manado. Focused on delivering high-performance RESTful API backend and relational database architecture.',
+      longDescription: 'Academic Information System (SIAKAD) for Universitas Muhammadiyah Manado. Core responsibilities included designing and providing RESTful APIs using Laravel and managing high-performance PostgreSQL database architecture.',
       tags: ['Laravel API', 'PostgreSQL', 'Backend', 'Database Admin'],
       imageSrc: siakadImg,
       isPrivate: true,
@@ -139,8 +139,8 @@ export const FeaturedProjects: React.FC = () => {
         <div className="section-title">
           <Sparkles size={24} color="var(--accent-primary)" />
           <div>
-            <h2>Proyek Unggulan</h2>
-            <p className="section-subtitle">Klik pada kartu proyek untuk melihat detail lengkap</p>
+            <h2>Featured Projects</h2>
+            <p className="section-subtitle">Click on any project card to view complete details</p>
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@ export const FeaturedProjects: React.FC = () => {
           className="featured-slide"
           key={activeSlide}
           onClick={() => setSelectedProject(currentProject)}
-          title="Klik untuk detail proyek"
+          title="Click for project details"
         >
           {/* Left: Image */}
           <div className="featured-slide-image">
@@ -214,7 +214,7 @@ export const FeaturedProjects: React.FC = () => {
                 onClick={e => { e.stopPropagation(); setSelectedProject(currentProject); }}
               >
                 <ExternalLink size={16} />
-                <span>Detail</span>
+                <span>Details</span>
               </button>
             </div>
           </div>
@@ -266,7 +266,7 @@ export const FeaturedProjects: React.FC = () => {
             key={project.id}
             className={`project-card ${project.id === projects[activeSlide].id ? 'project-card-highlighted' : ''}`}
             onClick={() => setSelectedProject(project)}
-            title="Klik untuk membuka detail proyek"
+            title="Click to view project details"
           >
             <div className="project-banner">
               {project.imageSrc ? (
@@ -320,7 +320,7 @@ export const FeaturedProjects: React.FC = () => {
               className="modal-close-btn"
               onClick={() => setSelectedProject(null)}
               aria-label="Close modal"
-              title="Tutup (Esc)"
+              title="Close (Esc)"
             >
               <X size={20} />
             </button>
@@ -344,7 +344,7 @@ export const FeaturedProjects: React.FC = () => {
 
               <div style={{ marginBottom: '1.5rem' }}>
                 <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                  Teknologi Utama:
+                  Key Technologies:
                 </div>
                 <div className="project-tech-tags">
                   {selectedProject.tags.map((tag, idx) => (
@@ -364,7 +364,7 @@ export const FeaturedProjects: React.FC = () => {
                     rel="noreferrer"
                   >
                     <GithubIcon size={18} />
-                    <span>Kunjungi Repositori GitHub</span>
+                    <span>Visit GitHub Repository</span>
                   </a>
                 ) : selectedProject.isPrivate ? (
                   <div className="btn btn-secondary" style={{ cursor: 'default', opacity: 0.8 }}>

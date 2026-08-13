@@ -14,9 +14,9 @@ export const ContactBanner: React.FC = () => {
 
   return (
     <section id="contact" className="contact-banner">
-      <h2>Mari Berkolaborasi dengan Fitra!</h2>
+      <h2>Let's Collaborate with Fitra!</h2>
       <p>
-        Saya terbuka untuk proyek freelance, pengembangan aplikasi web, maupun peluang karir. Kirimkan pesan melalui WhatsApp atau terhubung via media sosial.
+        I am open to freelance projects, web application development, and career opportunities. Send a message via WhatsApp or connect with me on social media.
       </p>
 
       <div style={{
@@ -55,7 +55,7 @@ export const ContactBanner: React.FC = () => {
           style={{ textDecoration: 'none' }}
         >
           <WhatsappIcon size={18} />
-          <span>Chat WhatsApp</span>
+          <span>Chat on WhatsApp</span>
         </a>
       </div>
 

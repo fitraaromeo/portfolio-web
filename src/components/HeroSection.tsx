@@ -12,11 +12,11 @@ export const HeroSection: React.FC = () => {
         </div>
         
         <h1>
-          Halo, Saya <span className="gradient-text">Fitra Romeo Winky</span>
+          Hi, I'm <span className="gradient-text">Fitra Romeo Winky</span>
         </h1>
         
         <p>
-          Spesialis di bidang <strong>Artificial Intelligence, Machine Learning, Deep Learning, Computer Vision, & NLP</strong>. Berpengalaman kuat dalam pengembangan <strong>Backend Web & Database</strong>, serta mampu membangun solusi aplikasi <strong>Full-Stack Web</strong> secara utuh.
+          Specialized in <strong>Artificial Intelligence, Machine Learning, Deep Learning, Computer Vision, & NLP</strong>. Strong background in <strong>Web Backend & Database</strong> development, capable of engineering complete <strong>Full-Stack Web</strong> applications.
         </p>
 
         <div className="hero-actions">

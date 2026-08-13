@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, onToggleTheme }) => {
           className="mobile-toggle-btn"
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           aria-label="Toggle Mobile Menu"
-          title="Menu Navigasi"
+          title="Navigation Menu"
         >
           {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
