@@ -63,7 +63,7 @@ export const ContactBanner: React.FC = () => {
         <a href="https://github.com/fitraaromeo" target="_blank" rel="noreferrer" className="social-btn" title="GitHub - @fitraaromeo">
           <GithubIcon size={20} />
         </a>
-        <a href="https://www.linkedin.com/in/fitra-winky-380836266/" target="_blank" rel="noreferrer" className="social-btn" title="LinkedIn - Fitra Winky">
+        <a href="https://www.linkedin.com/in/fitraaromeo" target="_blank" rel="noreferrer" className="social-btn" title="LinkedIn - @fitraaromeo">
           <LinkedinIcon size={20} />
         </a>
         <a href="https://instagram.com/fitraaromeo" target="_blank" rel="noreferrer" className="social-btn" title="Instagram - @fitraaromeo">

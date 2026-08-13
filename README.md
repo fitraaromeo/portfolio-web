@@ -71,7 +71,7 @@ Selamat datang di repositori website portofolio interaktif **Fitra Romeo Winky**
 
 - **Nama**: Fitra Romeo Winky
 - **GitHub**: [@fitraaromeo](https://github.com/fitraaromeo)
-- **LinkedIn**: [Fitra Winky](https://www.linkedin.com/in/fitra-winky-380836266/)
+- **LinkedIn**: [fitraaromeo](https://www.linkedin.com/in/fitraaromeo)
 - **Instagram**: [@fitraaromeo](https://instagram.com/fitraaromeo)
 - **WhatsApp**: [081259306280](https://wa.me/6281259306280)
 
