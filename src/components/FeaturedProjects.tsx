@@ -6,6 +6,9 @@ import iuranHubImg from '../assets/Iuran Hub.png';
 import siakadImg from '../assets/Siakad UM Manado.png';
 import carDamageImg from '../assets/Car Damage Detection YOLOv12n.png';
 import otoscanImg from '../assets/otoscan.png';
+import otoscanWebDetailImg from '../assets/Otoscan Web Inspection Detail.png';
+import otoscanWebDashboardImg from '../assets/Otoscan Web Dashboard.png';
+import otoscanWebListImg from '../assets/Otoscan Web Inspection List.png';
 
 interface Project {
   id: number;
@@ -15,8 +18,10 @@ interface Project {
   longDescription?: string;
   tags: string[];
   imageSrc?: string;
+  images?: { src: string; caption: string }[];
   bannerIcon?: React.ReactNode;
   githubUrl?: string;
+  liveUrl?: string;
   isPrivate?: boolean;
   category: string;
 }
@@ -29,10 +34,27 @@ export const FeaturedProjects: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [modalImgIdx, setModalImgIdx] = useState(0);
 
   const projects: Project[] = [
     {
       id: 1,
+      title: 'OtoScan Web',
+      shortDesc: 'Hybrid Web Implementation of OtoScan AI',
+      description: 'Next.js web frontend for OtoScan AI — shares the same Go Fiber API & PostgreSQL backend. Features real-time camera scanning, Live AI preview with bounding boxes, and full CRUD management.',
+      longDescription: 'OtoScan Web is the hybrid web layer built on top of the existing OtoScan AI infrastructure. It uses the same Go Fiber REST API and PostgreSQL database as the original Flutter app — zero backend duplication. Built with Next.js 14 App Router and TypeScript, it delivers an interactive dashboard with real-time stats, a 4-side vehicle scanner (Front / Rear / Left / Right), live camera feed with YOLOv12 bounding-box preview, gallery upload, and full CRUD management for clients, vehicles, and employees. The AI model detects 6 damage types: dent, scratch, crack, glass shatter, lamp broken, and tire flat.',
+      tags: ['Next.js 14', 'TypeScript', 'Go Fiber', 'YOLOv12', 'PostgreSQL', 'FastAPI'],
+      imageSrc: otoscanWebDetailImg,
+      images: [
+        { src: otoscanWebDetailImg,    caption: 'Inspection Detail — YOLOv12 bounding-box results per side' },
+        { src: otoscanWebDashboardImg, caption: 'Dashboard — Real-time stats & trend charts' },
+        { src: otoscanWebListImg,      caption: 'Inspection List — Paginated session management' },
+      ],
+      githubUrl: 'https://github.com/fitraaromeo/otoscan-web',
+      category: 'AI / Full-Stack'
+    },
+    {
+      id: 2,
       title: 'OtoScan AI',
       shortDesc: 'Intelligent Vehicle Inspection System',
       description: 'AI-powered physical vehicle inspection system with YOLOv12 Computer Vision. Monorepo with fully integrated Flutter, Go Fiber API, and Python FastAPI.',
@@ -43,7 +65,7 @@ export const FeaturedProjects: React.FC = () => {
       category: 'AI / Full-Stack'
     },
     {
-      id: 2,
+      id: 3,
       title: 'Car Damage Detection',
       shortDesc: 'AI-Powered Damage Classifier',
       description: 'AI system for identifying & detecting car damage severity powered by a YOLOv12n model integrated with a high-performance FastAPI web engine.',
@@ -54,7 +76,7 @@ export const FeaturedProjects: React.FC = () => {
       category: 'Computer Vision'
     },
     {
-      id: 3,
+      id: 4,
       title: 'Honeypot Data Analysis',
       shortDesc: 'Anomaly Detection with Isolation Forest',
       description: 'Anomaly detection system to identify attack patterns in honeypot data using Isolation Forest, 10+ feature engineering, and automated attack classification.',
@@ -65,7 +87,7 @@ export const FeaturedProjects: React.FC = () => {
       category: 'Machine Learning'
     },
     {
-      id: 4,
+      id: 5,
       title: 'Iuran Hub',
       shortDesc: 'Digital Community Finance Platform',
       description: 'Digital platform application designed to manage community funds and dues transparently and systematically.',
@@ -76,7 +98,7 @@ export const FeaturedProjects: React.FC = () => {
       category: 'Full-Stack Web'
     },
     {
-      id: 5,
+      id: 6,
       title: 'Siakad UM Manado',
       shortDesc: 'Academic Information System API',
       description: 'Academic Information System for Universitas Muhammadiyah Manado. Focused on delivering high-performance RESTful API backend and relational database architecture.',
@@ -155,7 +177,7 @@ export const FeaturedProjects: React.FC = () => {
         <div
           className="featured-slide"
           key={activeSlide}
-          onClick={() => setSelectedProject(currentProject)}
+          onClick={() => { setSelectedProject(currentProject); setModalImgIdx(0); }}
           title="Click for project details"
         >
           {/* Left: Image */}
@@ -211,7 +233,7 @@ export const FeaturedProjects: React.FC = () => {
               <button
                 className="btn btn-secondary"
                 style={{ fontSize: '0.875rem', padding: '0.55rem 1.1rem' }}
-                onClick={e => { e.stopPropagation(); setSelectedProject(currentProject); }}
+                onClick={e => { e.stopPropagation(); setSelectedProject(currentProject); setModalImgIdx(0); }}
               >
                 <ExternalLink size={16} />
                 <span>Details</span>
@@ -265,7 +287,7 @@ export const FeaturedProjects: React.FC = () => {
           <div
             key={project.id}
             className={`project-card ${project.id === projects[activeSlide].id ? 'project-card-highlighted' : ''}`}
-            onClick={() => setSelectedProject(project)}
+            onClick={() => { setSelectedProject(project); setModalImgIdx(0); }}
             title="Click to view project details"
           >
             <div className="project-banner">
@@ -325,15 +347,62 @@ export const FeaturedProjects: React.FC = () => {
               <X size={20} />
             </button>
 
-            <div className="modal-banner">
-              {selectedProject.imageSrc ? (
-                <img src={selectedProject.imageSrc} alt={selectedProject.title} />
-              ) : (
-                <div style={{ padding: '2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {selectedProject.bannerIcon || <ShieldAlert size={80} color="var(--accent-primary)" />}
+            {/* ── Modal Banner / Image Slider ── */}
+            {selectedProject.images && selectedProject.images.length > 1 ? (
+              <div className="modal-img-slider">
+                <div className="modal-img-slider-track">
+                  <img
+                    key={modalImgIdx}
+                    src={selectedProject.images[modalImgIdx].src}
+                    alt={selectedProject.images[modalImgIdx].caption}
+                    className="modal-img-slider-img"
+                  />
                 </div>
-              )}
-            </div>
+
+                {/* Prev arrow */}
+                <button
+                  className="modal-img-arrow modal-img-arrow-left"
+                  onClick={(e) => { e.stopPropagation(); setModalImgIdx((modalImgIdx - 1 + selectedProject.images!.length) % selectedProject.images!.length); }}
+                  aria-label="Previous screenshot"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+
+                {/* Next arrow */}
+                <button
+                  className="modal-img-arrow modal-img-arrow-right"
+                  onClick={(e) => { e.stopPropagation(); setModalImgIdx((modalImgIdx + 1) % selectedProject.images!.length); }}
+                  aria-label="Next screenshot"
+                >
+                  <ChevronRight size={20} />
+                </button>
+
+                {/* Caption + Dots */}
+                <div className="modal-img-footer">
+                  <span className="modal-img-caption">{selectedProject.images[modalImgIdx].caption}</span>
+                  <div className="modal-img-dots">
+                    {selectedProject.images.map((_, i) => (
+                      <button
+                        key={i}
+                        className={`modal-img-dot ${i === modalImgIdx ? 'active' : ''}`}
+                        onClick={(e) => { e.stopPropagation(); setModalImgIdx(i); }}
+                        aria-label={`Screenshot ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="modal-banner">
+                {selectedProject.imageSrc ? (
+                  <img src={selectedProject.imageSrc} alt={selectedProject.title} />
+                ) : (
+                  <div style={{ padding: '2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {selectedProject.bannerIcon || <ShieldAlert size={80} color="var(--accent-primary)" />}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="modal-content">
               <span className="project-category-badge" style={{ marginBottom: '0.75rem', display: 'inline-flex' }}>
@@ -355,7 +424,7 @@ export const FeaturedProjects: React.FC = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 {selectedProject.githubUrl ? (
                   <a
                     href={selectedProject.githubUrl}
@@ -372,6 +441,17 @@ export const FeaturedProjects: React.FC = () => {
                     <span>Private Repository (Internal / Non-Public)</span>
                   </div>
                 ) : null}
+                {selectedProject.liveUrl && (
+                  <a
+                    href={selectedProject.liveUrl}
+                    className="btn btn-secondary"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <ExternalLink size={18} />
+                    <span>Live Demo</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>
